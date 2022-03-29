@@ -7,6 +7,7 @@ variable "artifact_folder" {
 variable "name" {
   type        = string
   description = "The name of your authorizer. This must match the name of the binary."
+  default = "authorizer"
 }
 
 variable "prefix" {
@@ -36,13 +37,13 @@ variable "handler" {
 variable "memory" {
   type        = number
   description = "The memory you wish to assign to the lambda function."
-  default     = 256
+  default     = 128
 }
 
 variable "timeout" {
   type        = number
   description = "The maximum amount of time (in seconds) your function is allowed to run."
-  default     = 3
+  default     = 2
 }
 
 variable "environment_vars" {
