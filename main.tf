@@ -33,6 +33,12 @@ resource "aws_lambda_function" "authorizer" {
   source_code_hash = data.archive_file.authorizer.output_base64sha256
   role             = aws_iam_role.authorizer.arn
   handler          = var.handler
+  dynamic "environment" {
+    for_each = length(var.environment_vars) > 0 ? [1] : []
+    content {
+      variables = var.environment_vars
+    }
+  }
   depends_on = [
     data.archive_file.authorizer
   ]
