@@ -14,15 +14,15 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
   }
 }
 
+resource "aws_iam_role" "authorizer" {
+  name               = "${local.authorizer_name}-role"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
+}
+
 data "archive_file" "authorizer" {
   type        = "zip"
   source_file = "${var.artifact_folder}/${var.name}"
   output_path = "${var.name}.zip"
-}
-
-resource "aws_iam_role" "authorizer" {
-  name               = "${local.authorizer_name}-role"
-  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }
 
 resource "aws_lambda_function" "authorizer" {
