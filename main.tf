@@ -68,7 +68,12 @@ resource "aws_iam_role" "invocation" {
   name               = "${local.authorizer_name}-invocation-role"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.api_gateway_assume_role_policy.json
-  policy             = data.aws_iam_policy_document.invocation.json
+}
+
+resource "aws_iam_role_policy" "test_policy" {
+  name   = "test_policy"
+  role   = aws_iam_role.test_role.id
+  policy = data.aws_iam_policy_document.invocation.json
 }
 
 resource "aws_api_gateway_authorizer" "authorizer" {
