@@ -1,5 +1,6 @@
 locals {
   authorizer_name = "${var.prefix}${var.name}${var.suffix}"
+  handler = var.handler != "" ? var.handler : var.name
 }
 
 data "aws_iam_policy_document" "lambda_assume_role_policy" {
@@ -32,7 +33,7 @@ resource "aws_lambda_function" "authorizer" {
   filename         = data.archive_file.authorizer.output_path
   source_code_hash = data.archive_file.authorizer.output_base64sha256
   role             = aws_iam_role.authorizer.arn
-  handler          = var.handler
+  handler          = local.handler
   dynamic "environment" {
     for_each = length(var.environment_vars) > 0 ? [1] : []
     content {

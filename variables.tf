@@ -31,7 +31,7 @@ variable "runtime" {
 variable "handler" {
   type        = string
   description = "The name of the handler/function/entrypoint in your code to call when the function gets invoked."
-  default     = local.authorizer_name
+  default     = ""
 }
 
 variable "memory" {
