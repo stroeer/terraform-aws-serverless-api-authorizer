@@ -44,3 +44,29 @@ resource "aws_lambda_function" "authorizer" {
     data.archive_file.authorizer
   ]
 }
+
+data "aws_iam_policy_document" "api_gateway_assume_role_policy" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["apigateway.amazonaws.com"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "invocation" {
+  statement {
+    effect    = "Allow"
+    actions   = ["lambda:InvokeFunction"]
+    resources = [aws_lambda_function.authorizer.arn]
+  }
+}
+
+resource "aws_iam_role" "invocation" {
+  name               = "${local.authorizer_name}-invocation-role"
+  path               = "/"
+  assume_role_policy = data.aws_iam_policy_document.api_gateway_assume_role_policy.json
+  policy             = data.aws_iam_policy_document.invocation.json
+}
