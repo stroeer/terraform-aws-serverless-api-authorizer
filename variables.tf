@@ -51,3 +51,14 @@ variable "environment_vars" {
   description = "Environment variables you want to set in the lambda environment."
   default     = {}
 }
+
+variable "type" {
+  type        = string
+  description = "The type of authorizer that you want to create."
+  default     = "TOKEN"
+}
+
+variable "api_id" {
+  type        = string
+  description = "The id of your api where the authorizer should be registered."
+}
