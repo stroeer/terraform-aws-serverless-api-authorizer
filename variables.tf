@@ -7,7 +7,7 @@ variable "artifact_folder" {
 variable "name" {
   type        = string
   description = "The name of your authorizer. This must match the name of the binary."
-  default = "authorizer"
+  default     = "authorizer"
 }
 
 variable "prefix" {
@@ -23,15 +23,15 @@ variable "suffix" {
 }
 
 variable "runtime" {
-    type = string
-    description = "The runtime that your code needs to run."
-    default = "go1.x"
+  type        = string
+  description = "The runtime that your code needs to run."
+  default     = "go1.x"
 }
 
 variable "handler" {
-  type = string
+  type        = string
   description = "The name of the handler/function/entrypoint in your code to call when the function gets invoked."
-  default = local.authorizer_name
+  default     = local.authorizer_name
 }
 
 variable "memory" {
