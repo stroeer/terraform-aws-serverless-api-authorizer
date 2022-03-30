@@ -72,13 +72,13 @@ resource "aws_iam_role" "invocator" {
 resource "aws_iam_role_policy" "invocator" {
   name   = "${local.authorizer_name}-invocator-policies"
   role   = aws_iam_role.invocator.id
-  policy = data.aws_iam_policy_document.invocator.json
+  policy = data.aws_iam_policy_document.invocation.json
 }
 
 resource "aws_api_gateway_authorizer" "authorizer" {
   name                   = local.authorizer_name
   type                   = var.type
-  rest_api_id            = data.aws_api_gateway_rest_api.rest_api
+  rest_api_id            = var.api_id
   authorizer_uri         = aws_lambda_function.authorizer.invoke_arn
   authorizer_credentials = aws_iam_role.invocator.arn
 }
