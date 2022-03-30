@@ -1,6 +1,6 @@
 locals {
   authorizer_name = "${var.prefix}${var.name}${var.suffix}"
-  handler = var.handler != "" ? var.handler : var.name
+  handler         = var.handler != "" ? var.handler : var.name
 }
 
 data "aws_iam_policy_document" "lambda_assume_role_policy" {
