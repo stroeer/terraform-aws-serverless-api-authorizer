@@ -64,16 +64,15 @@ data "aws_iam_policy_document" "invocation" {
   }
 }
 
-resource "aws_iam_role" "invocation" {
-  name               = "${local.authorizer_name}-invocation-role"
-  path               = "/"
+resource "aws_iam_role" "invocator" {
+  name               = "${local.authorizer_name}-invocator-role"
   assume_role_policy = data.aws_iam_policy_document.api_gateway_assume_role_policy.json
 }
 
-resource "aws_iam_role_policy" "test_policy" {
-  name   = "test_policy"
-  role   = aws_iam_role.test_role.id
-  policy = data.aws_iam_policy_document.invocation.json
+resource "aws_iam_role_policy" "invocator" {
+  name   = "${local.authorizer_name}-invocator-policies"
+  role   = aws_iam_role.invocator.id
+  policy = data.aws_iam_policy_document.invocator.json
 }
 
 resource "aws_api_gateway_authorizer" "authorizer" {
@@ -81,5 +80,5 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   type                   = var.type
   rest_api_id            = data.aws_api_gateway_rest_api.rest_api
   authorizer_uri         = aws_lambda_function.authorizer.invoke_arn
-  authorizer_credentials = aws_iam_role.invocation.arn
+  authorizer_credentials = aws_iam_role.invocator.arn
 }
