@@ -70,3 +70,11 @@ resource "aws_iam_role" "invocation" {
   assume_role_policy = data.aws_iam_policy_document.api_gateway_assume_role_policy.json
   policy             = data.aws_iam_policy_document.invocation.json
 }
+
+resource "aws_api_gateway_authorizer" "authorizer" {
+  name                   = local.authorizer_name
+  type                   = var.type
+  rest_api_id            = data.aws_api_gateway_rest_api.rest_api
+  authorizer_uri         = aws_lambda_function.authorizer.invoke_arn
+  authorizer_credentials = aws_iam_role.invocation.arn
+}
