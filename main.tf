@@ -75,7 +75,7 @@ resource "aws_iam_role_policy" "invocator" {
   policy = data.aws_iam_policy_document.invocation.json
 }
 
-resource "aws_api_gateway_authorizer" "authorizer" {
+resource "aws_api_gateway_authorizer" "invocator" {
   name                   = local.authorizer_name
   type                   = var.type
   rest_api_id            = var.api_id
