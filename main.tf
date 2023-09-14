@@ -21,7 +21,7 @@ resource "aws_iam_role" "authorizer" {
 
 data "archive_file" "authorizer" {
   type        = "zip"
-  source_file = "${var.artifact_folder}/${var.name}"
+  source_file = "${var.artifact_folder}/bootstrap"
   output_path = "${var.name}.zip"
 }
 
