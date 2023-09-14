@@ -25,7 +25,7 @@ variable "suffix" {
 variable "runtime" {
   type        = string
   description = "The runtime that your code needs to run."
-  default     = "go1.x"
+  default     = "provided.al2"
 }
 
 variable "handler" {
