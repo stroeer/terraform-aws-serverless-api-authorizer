@@ -29,6 +29,7 @@ resource "aws_lambda_function" "authorizer" {
   description      = "The authorizer lambda that will check auth before calling an api gateway resource."
   function_name    = local.authorizer_name
   runtime          = var.runtime
+  architectures    = ["arm64"]
   memory_size      = var.memory
   filename         = data.archive_file.authorizer.output_path
   source_code_hash = data.archive_file.authorizer.output_base64sha256
